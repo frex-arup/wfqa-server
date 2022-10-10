@@ -38,4 +38,16 @@ public class UserController {
 		
 		return userService.getUsersByStatus(status);
 	}
+	
+	@GetMapping("/get-user-by-un")
+	@ApiOperation(value = "Gets user based on loginUserId and status (getUsersByLoginUserId)",
+            notes = "Gets all active users present inside dat.dat_user table.")
+	public DAT_User getUsersByLoginUserId(
+			@ApiParam(value = "loginUserId / username")
+			@RequestParam(value = "loginUserId", required = true) String loginUserId,
+			@ApiParam(value = "status of user", allowableValues = "A, C, I")
+			@RequestParam(value = "status", required = true) String status) {
+		
+		return userService.getUsersByLoginUserId(loginUserId, status);
+	}
 }

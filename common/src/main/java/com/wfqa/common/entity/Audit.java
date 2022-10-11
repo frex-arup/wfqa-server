@@ -1,5 +1,6 @@
 package com.wfqa.common.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class Audit {
+public class Audit implements Serializable {
 
 	@Column(name = "created_userid", length = 15, updatable = false)
 	@CreatedBy

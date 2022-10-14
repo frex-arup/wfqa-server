@@ -1,20 +1,26 @@
 package com.wfqa.dat.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.WhereJoinTable;
 
 import com.wfqa.common.converter.BooleanToStringConverter;
-import com.wfqa.common.entity.Audit;
+import com.wfqa.common.entity.AuditForSite;
+import com.wfqa.common.primarykey.Id_RevisionId;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,16 +31,21 @@ import lombok.Setter;
 @Table(name = "sites", schema = "DAT")
 @DynamicUpdate
 @DynamicInsert
-public class Site extends Audit {
+@IdClass(Id_RevisionId.class)
+public class Site extends AuditForSite {
     @Id
     @Column
     private Long id;
     
+    @Id
+    @Column(name = "revision_id")
+    private Long revisionId;
+    
     @Column(length = 20)
     private String type;
     
-    @Column(name = "address_id")
-    private Long addressId;
+//    @Column(name = "address_id")
+//    private Long addressId;
     
     @Column(name = "first_name", length = 75)
     private String firstName;
@@ -77,7 +88,7 @@ public class Site extends Audit {
     @Column(name = "employer_name", length = 20)
     private String employerName;
     
-    @Column(name = "monority_vendor_id")
+    @Column(name = "minority_vendor_id")
     private Long minorityVendorId;
     
     @Column(name = "contract_image_id")
@@ -93,10 +104,10 @@ public class Site extends Audit {
     private String paymentMethod;
     
     @Column(name = "pricing_term_begin")
-    private LocalDateTime pricingTermBegin;
+    private LocalDate pricingTermBegin;
     
-    @Column(name = "pricing_term_expire")
-    private LocalDateTime pricingTermExpire;
+    @Column(name = "pricing_term_exp")
+    private LocalDate pricingTermExpire;
     
     @Column(name = "inet_access", length = 1)
     private String inetAccess;
@@ -171,16 +182,16 @@ public class Site extends Audit {
     
     @Column(name = "current_hr_file_received", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private String currentHRFileReceived;
+    private Boolean currentHRFileReceived;
     
     @Column(name = "notification_type", length = 10)
     private String notificationType;
     
     @Column(name = "consortium_beg_date")
-    private LocalDateTime consortiumBegDate;
+    private LocalDate consortiumBegDate;
     
     @Column(name = "consortium_end_date")
-    private LocalDateTime consortiumEndDate;
+    private LocalDate consortiumEndDate;
 
     @Column(name = "qis_reference_id", length = 10)
     private String qisReferenceId;
@@ -191,240 +202,237 @@ public class Site extends Audit {
     // FormFox Preferences.
     @Column(name = "allow_hair_drug_tests", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean allowHairDrugTests;
+    private Boolean allowHairDrugTests;
     
     @Column(name = "allow_oral_drug_tests", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean allowOralDrugTests;
+    private Boolean allowOralDrugTests;
     
     @Column(name = "reviewing_mro", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean reviewingMro;
+    private Boolean reviewingMro;
     
     @Column(name = "send_urine_dot_to_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendUrineDotToFormFox;
+    private Boolean sendUrineDotToFormFox;
     
     @Column(name = "send_urine_non_dot_to_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendUrineNonDotToFormFox;
+    private Boolean sendUrineNonDotToFormFox;
     
     @Column(name = "send_hair_dot_to_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendHairDotToFormFox;
+    private Boolean sendHairDotToFormFox;
     
     @Column(name = "send_hair_non_dot_to_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendHairNonDotToFormFox;
+    private Boolean sendHairNonDotToFormFox;
     
     @Column(name = "send_oral_dot_to_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendOralDotToFormFox;
+    private Boolean sendOralDotToFormFox;
     
     @Column(name = "send_oral_non_dot_to_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendOralNonDotToFormFox;
+    private Boolean sendOralNonDotToFormFox;
     
     @Column(name = "send_phys_dot_to_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendPhysicalDotToFormFox;
+    private Boolean sendPhysicalDotToFormFox;
     
     @Column(name = "send_phys_non_dot_to_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendPhysicalNonDotToFormFox;
+    private Boolean sendPhysicalNonDotToFormFox;
     
     @Column(name = "send_bat_dot_to_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendBatDotToFormFox;
+    private Boolean sendBatDotToFormFox;
     
     @Column(name = "send_bat_non_dot_to_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendBatNonDotToFormFox;
+    private Boolean sendBatNonDotToFormFox;
     
     @Column(name = "national_registry_num", length = 20)
     private String nationalRegistryNum;
     
-    @Column(name = "revision_id")
-    private Long revisionId;
-    
-    @Column(name = "address_revision_id")
-    private Long addressRevisionId;
-    
+//    @Column(name = "address_revision_id")
+//    private Long addressRevisionId;
+
     @Column(name = "allow_poct_tests", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean allowPOCTTests;
+    private Boolean allowPOCTTests;
     
     @Column(name = "send_poct_dot_to_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendPOCTDotToFormFox;
+    private Boolean sendPOCTDotToFormFox;
     
     @Column(name = "send_poct_non_dot_to_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendPOCTNonDotToFormFox;
+    private Boolean sendPOCTNonDotToFormFox;
     
     @Column(name = "quest_psc", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean questPsc;
+    private Boolean questPsc;
     
     @Column(name = "send_orders_to_crl", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendOrdersToCrl;
+    private Boolean sendOrdersToCrl;
     
     @Column(name = "tier_1", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean tier1;
+    private Boolean tier1;
     
     @Column(name = "tier_2", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean tier2;
+    private Boolean tier2;
     
     @Column(name = "tier_3", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean tier3;
+    private Boolean tier3;
     
     @Column(name = "tier_4", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean tier4;
+    private Boolean tier4;
     
     @Column(name = "crl_site_code", length = 1)
     private String crlSiteCode;
     
     @Column(name = "physical_tier_1", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean physicalTier1;
+    private Boolean physicalTier1;
     
     @Column(name = "physical_tier_2", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean physicalTier2;
+    private Boolean physicalTier2;
     
     @Column(name = "physical_tier_3", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean physicalTier3;
+    private Boolean physicalTier3;
     
     @Column(name = "physical_tier_4", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean physicalTier4;
+    private Boolean physicalTier4;
     
     @Column(name = "quest_site_id", length = 20)
     private String questSiteId;
     
     @Column(name = "send_urine_dot_to_quest", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendUrineDotToQuest;
+    private Boolean sendUrineDotToQuest;
     
     @Column(name = "send_urine_non_dot_to_quest", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendUrineNonDotToQuest;
+    private Boolean sendUrineNonDotToQuest;
     
     @Column(name = "send_hair_dot_to_quest", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendHairDotToQuest;
+    private Boolean sendHairDotToQuest;
     
     @Column(name = "send_hair_non_dot_to_quest", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendHairNonDotToQuest;
+    private Boolean sendHairNonDotToQuest;
     
     @Column(name = "send_oral_dot_to_quest", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendOralDotToQuest;
+    private Boolean sendOralDotToQuest;
     
     @Column(name = "send_oral_non_dot_to_quest", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendOralNonDotToQuest;
+    private Boolean sendOralNonDotToQuest;
     
     @Column(name = "send_phys_dot_to_quest", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendPhysicalDotToQuest;
+    private Boolean sendPhysicalDotToQuest;
     
     @Column(name = "send_phys_non_dot_to_quest", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendPhysicalNonDotToQuest;
+    private Boolean sendPhysicalNonDotToQuest;
     
     @Column(name = "send_bat_dot_to_quest", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendBatDotToQuest;
+    private Boolean sendBatDotToQuest;
     
     @Column(name = "send_bat_non_dot_to_quest", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendBatNonDotToQuest;
+    private Boolean sendBatNonDotToQuest;
 
     @Column(name = "send_poct_dot_to_quest", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendPOCTDotToQuest;
+    private Boolean sendPOCTDotToQuest;
     
     @Column(name = "send_poct_non_dot_to_quest", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendPOCTNonDotToQuest;
+    private Boolean sendPOCTNonDotToQuest;
     
     @Column(name = "always_use_form_fox", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean alwaysUseFormFox;
+    private Boolean alwaysUseFormFox;
     
     @Column(name = "labcorp_site_id", length = 20)
     private String labcorpSiteId;
     
     @Column(name = "send_urine_dot_to_labcorp", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendUrineDotToLabCorp;
+    private Boolean sendUrineDotToLabCorp;
     
     @Column(name = "send_urine_non_dot_to_labcorp", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendUrineNonDotToLabCorp;
+    private Boolean sendUrineNonDotToLabCorp;
     
     @Column(name = "send_hair_dot_to_labcorp", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendHairDotToLabCorp;
+    private Boolean sendHairDotToLabCorp;
     
     @Column(name = "send_hair_non_dot_to_labcorp", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendHairNonDotToLabCorp;
+    private Boolean sendHairNonDotToLabCorp;
     
     @Column(name = "send_oral_dot_to_labcorp", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendOralDotToLabCorp;
+    private Boolean sendOralDotToLabCorp;
     
     @Column(name = "send_oral_non_dot_to_labcorp", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendOralNonDotToLabCorp;
+    private Boolean sendOralNonDotToLabCorp;
     
     @Column(name = "send_phys_dot_to_labcorp", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendPhysicalDotToLabCorp;
+    private Boolean sendPhysicalDotToLabCorp;
     
     @Column(name = "send_phys_non_dot_to_labcorp", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendPhysicalNonDotToLabCorp;
+    private Boolean sendPhysicalNonDotToLabCorp;
     
     @Column(name = "send_bat_dot_to_labcorp", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendBatDotToLabCorp;
+    private Boolean sendBatDotToLabCorp;
     
     @Column(name = "send_bat_non_dot_to_labcorp", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendBatNonDotToLabCorp;
+    private Boolean sendBatNonDotToLabCorp;
 
     @Column(name = "send_poct_dot_to_labcorp", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendPOCTDotToLabCorp;
+    private Boolean sendPOCTDotToLabCorp;
     
     @Column(name = "send_poct_non_dot_to_labcorp", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean sendPOCTNonDotToLabCorp;
+    private Boolean sendPOCTNonDotToLabCorp;
     
     @Column(name = "evt_customer_code", length = 55)
     private String evtCustomerCode;
     
-    @Column(name = "eccf_netWork", length = 1)
+    @Column(name = "eccf_network", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean eccfNetWork;
+    private Boolean eccfNetWork;
     
     @Column(name = "perform_onsite_collection", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean performOnsiteCollection;
+    private Boolean performOnsiteCollection;
     
     @Column(name = "perform_observed_collection", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean performObservedCollection;
+    private Boolean performObservedCollection;
     
     @Column(name = "acumatica_code", length = 20)
     private String acumaticaCode;
@@ -440,26 +448,34 @@ public class Site extends Audit {
     
     @Column(name = "marketplace_urine", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean marketplaceUrine;
+    private Boolean marketplaceUrine;
     
     @Column(name = "marketplace_hair", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean marketplaceHair;
+    private Boolean marketplaceHair;
     
     @Column(name = "marketplace_phy", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean marketplacePhysical;
+    private Boolean marketplacePhysical;
     
     @Column(name = "marketplace_bat", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean marketplaceBat;
+    private Boolean marketplaceBat;
     
     @Column(name = "site_hrs", length = 25)
     private String siteHrs;
 
     @Column(name = "exclude_from_automated_fax", length = 1)
     @Convert(converter=BooleanToStringConverter.class)
-    private boolean excludeFromAutomatedFax;
+    private Boolean excludeFromAutomatedFax;
+    
+    @OneToOne 
+    @JoinColumns({
+        @JoinColumn(name = "address_id", referencedColumnName = "id"),
+        @JoinColumn(name = "address_revision_id", referencedColumnName = "revision_id")
+    })
+    @WhereJoinTable(clause = "status = 'A' ")
+    private Address address;
     
     /**
     private String cityList;
@@ -491,7 +507,7 @@ public class Site extends Audit {
     
     
     
-    private boolean nationalRegistryMatch;
+    private Boolean nationalRegistryMatch;
 
     private double distance;
     private int labId;
@@ -523,7 +539,7 @@ public class Site extends Audit {
     private String crlDotPanel;
     private String psyLabAccount;
     private String psyPanel;
-    private boolean sendLocationToFormFox;
+    private Boolean sendLocationToFormFox;
     private String labHairList;
     private String labUrineList;
         

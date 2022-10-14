@@ -1,4 +1,4 @@
-package com.wfqa.common.mapper;
+package com.wfqa.common.entity;
 
 public interface HMapper<DTO, ENTITY> {
 	DTO toDTO(ENTITY u);

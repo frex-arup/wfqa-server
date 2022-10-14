@@ -1,4 +1,4 @@
-package com.wfqa.common.dto;
+package com.wfqa.common.entity;
 
 import java.util.ArrayList;
 import java.util.List;

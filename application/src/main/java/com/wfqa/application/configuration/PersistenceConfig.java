@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.wfqa.common.entity.MyUserDetails;
+import com.wfqa.application.entity.MyUserDetails;
 
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
@@ -21,8 +21,6 @@ public class PersistenceConfig {
         return () -> Optional.ofNullable(SecurityContextHolder.getContext())
                 .map(SecurityContext::getAuthentication)
                 .filter(Authentication::isAuthenticated)
-                .map(Authentication::getPrincipal)
-                .map(MyUserDetails.class::cast)
-                .map(MyUserDetails::getUsername);
+                .map( e -> ((MyUserDetails)e.getPrincipal()).getUsername());
     }
 }

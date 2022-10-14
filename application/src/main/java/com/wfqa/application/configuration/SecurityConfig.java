@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.wfqa.common.service.UserDetailsServiceImpl;
+import com.wfqa.application.service.UserDetailsServiceImpl;
 
 
 @Configuration

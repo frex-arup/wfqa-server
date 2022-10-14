@@ -1,17 +1,18 @@
-package com.wfqa.common.mapper;
+package com.wfqa.dat.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.wfqa.common.dto.DATUserDTO;
-import com.wfqa.common.entity.DAT_User;
+import com.wfqa.common.entity.HMapper;
+import com.wfqa.dat.dto.UserDTO;
+import com.wfqa.dat.entity.User;
 
 
 @Component
-public class UserMapper implements HMapper<DATUserDTO, DAT_User> {
+public class UserMapper implements HMapper<UserDTO, User> {
 
 	@Override
-	public DATUserDTO toDTO(DAT_User u) {
-		DATUserDTO userDTO = new DATUserDTO();
+	public UserDTO toDTO(User u) {
+	    UserDTO userDTO = new UserDTO();
 		userDTO.setLoginUserId(u.getLoginUserId());
 		userDTO.setRole(u.getRole());
 		userDTO.setPasswordHash(u.getPasswordHash());
@@ -20,8 +21,8 @@ public class UserMapper implements HMapper<DATUserDTO, DAT_User> {
 	}
 
 	@Override
-	public DAT_User toEntity(DATUserDTO t) {
-		DAT_User user = new DAT_User();
+	public User toEntity(UserDTO t) {
+	    User user = new User();
 		user.setLoginUserId(t.getLoginUserId());
 		user.setRole(t.getRole());
 		user.setPasswordHash(t.getPasswordHash());

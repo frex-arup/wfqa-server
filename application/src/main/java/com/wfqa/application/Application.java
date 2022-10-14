@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 @SpringBootApplication
 @SecurityScheme(name = "wfqa-service", scheme = "basic", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 @OpenAPIDefinition(info = @Info(title = "wfqa-service API", version = "1.0", description = "wfqa-service Information"))
-@ComponentScan(basePackages = { "com.wfqa.common", "com.wfqa.application"})
+@ComponentScan(basePackages = { "com.wfqa.common", "com.wfqa.dat", "com.wfqa.mroplace", "com.wfqa.application"})
 @EnableWebSecurity
 @EnableWebMvc
 public class Application {

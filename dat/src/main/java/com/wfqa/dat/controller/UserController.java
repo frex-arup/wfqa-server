@@ -1,9 +1,6 @@
-package com.wfqa.common.controller;
+package com.wfqa.dat.controller;
 
 import java.util.List;
-
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wfqa.common.entity.DAT_User;
-import com.wfqa.common.service.IUserService;
+import com.wfqa.dat.entity.User;
+import com.wfqa.dat.service.IUserService;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 /**
  * 
@@ -31,8 +31,8 @@ public class UserController {
 
 	@GetMapping
 	@ApiOperation(value = "Gets all Users (getUsers)",
-            notes = "Gets all active users present inside dat.dat_user table.")
-	public List<DAT_User> getUsers(
+            notes = "Gets all active users present inside dat.User table.")
+	public List<User> getUsers(
 			@ApiParam(value = "status of user", allowableValues = "A, C, I")
 			@RequestParam(value = "status", required = true) String status) {
 		
@@ -41,8 +41,8 @@ public class UserController {
 	
 	@GetMapping("/get-user-by-un")
 	@ApiOperation(value = "Gets user based on loginUserId and status (getUsersByLoginUserId)",
-            notes = "Gets all active users present inside dat.dat_user table.")
-	public DAT_User getUsersByLoginUserId(
+            notes = "Gets all active users present inside dat.User table.")
+	public User getUsersByLoginUserId(
 			@ApiParam(value = "loginUserId / username")
 			@RequestParam(value = "loginUserId", required = true) String loginUserId,
 			@ApiParam(value = "status of user", allowableValues = "A, C, I")

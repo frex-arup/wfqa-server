@@ -1,4 +1,4 @@
-package com.wfqa.common.controller;
+package com.wfqa.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wfqa.common.dto.ApiResponse;
-import com.wfqa.common.dto.DATUserDTO;
-import com.wfqa.common.entity.DAT_User;
-import com.wfqa.common.mapper.UserMapper;
-import com.wfqa.common.repository.UserRepository;
-import com.wfqa.common.service.UserDetailsServiceImpl;
+import com.wfqa.application.service.UserDetailsServiceImpl;
+import com.wfqa.common.entity.ApiResponse;
+import com.wfqa.dat.dto.UserDTO;
+import com.wfqa.dat.entity.User;
+import com.wfqa.dat.mapper.UserMapper;
+import com.wfqa.dat.repository.UserRepository;
 
 @RestController
 @RequestMapping(value = "/api/login")
@@ -28,14 +28,14 @@ public class LoginController {
 	private UserMapper userMapper;
 	
 	@PostMapping
-	public ApiResponse<DATUserDTO> login(@RequestBody DATUserDTO userDTO) {
+	public ApiResponse<UserDTO> login(@RequestBody UserDTO userDTO) {
 
 		UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(userDTO.getLoginUserId());
-		ApiResponse<DATUserDTO> response = new ApiResponse<DATUserDTO>();
+		ApiResponse<UserDTO> response = new ApiResponse<UserDTO>();
 		
-		DAT_User user = userRepository.findByLoginUserIdAndStatus(userDetails.getUsername(), "A").orElse(new DAT_User());
+		User user = userRepository.findByLoginUserIdAndStatus(userDetails.getUsername(), "A").orElse(new User());
 		try {
-			DATUserDTO dto = userMapper.toDTO(user);
+			UserDTO dto = userMapper.toDTO(user);
 			response.setData(dto);
 			response.setSucessCode(1000);
 			return response;

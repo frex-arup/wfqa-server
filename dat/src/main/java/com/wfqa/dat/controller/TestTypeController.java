@@ -1,5 +1,6 @@
 package com.wfqa.dat.controller;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,14 @@ public class TestTypeController {
 			@RequestParam(value = "testName", required = true) String testName) {
 		
 		return testTypeService.getTestIdByTypeAndName(testType, testName);
+	}
+	
+	@GetMapping("/getAllTestType")
+	@ApiOperation(value = "Gets All the distinct test type",
+            notes = "Get all test type from dat.test_types table")
+	public List<String> getAllTestType() {
+		
+		return testTypeService.getAllTestType();
 	}
 	
 

@@ -1,5 +1,7 @@
 package com.wfqa.dat.service;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +64,12 @@ public class TestTypeServiceImpl implements ITestTypeService{
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public List<String> getAllTestType() {
+		List<String> testTypes = testTypeRepository.getTestTypes();
+		return testTypes;
 	}
 
 }

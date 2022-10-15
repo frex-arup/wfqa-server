@@ -15,7 +15,7 @@ public class TestTypeDTO implements Serializable {
     private String             entityType;
     private String             customerTestName;
     private String             bundleType;
-    private String             simsTest;
+    private boolean             simsTest;
     private String             vendorServiceCode;
     private String             specimenType;
     

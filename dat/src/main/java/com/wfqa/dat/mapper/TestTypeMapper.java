@@ -39,7 +39,7 @@ public class TestTypeMapper implements HMapper<TestTypeDTO, TestType>{
 		testType.setBundleType(t.getBundleType());
 		testType.setCustomerTestName(t.getCustomerTestName());
 		testType.setVendorServiceCode(t.getVendorServiceCode());
-		testType.setSimsTest(t.getSimsTest());
+		testType.setSimsTest(t.isSimsTest());
 		testType.setSpecimenType(t.getSpecimenType());
 		
 		return  testType;

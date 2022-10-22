@@ -13,4 +13,7 @@ public class UserDTO implements Serializable {
     private String role;
     private String passwordHash;
     private String status;
+    private String encryKey;
+    private String firstName;
+    private String lastName;
 }

@@ -4,9 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.wfqa.common.entity.HMapper;
 import com.wfqa.dat.dto.TestTypeDTO;
-import com.wfqa.dat.dto.UserDTO;
 import com.wfqa.dat.entity.TestType;
-import com.wfqa.dat.entity.User;
 
 @Component
 public class TestTypeMapper implements HMapper<TestTypeDTO, TestType>{

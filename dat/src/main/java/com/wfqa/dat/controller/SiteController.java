@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@RequestMapping("/sites")
+@RequestMapping("api/sites")
 public class SiteController {
 
     @Autowired

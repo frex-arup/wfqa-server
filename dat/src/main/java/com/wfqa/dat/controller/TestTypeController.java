@@ -1,16 +1,14 @@
 package com.wfqa.dat.controller;
 
-import java.util.HashSet;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wfqa.common.entity.ApiResponse;
+import com.wfqa.common.enums.ResponseCode;
 import com.wfqa.dat.entity.TestType;
-import com.wfqa.dat.entity.User;
 import com.wfqa.dat.service.ITestTypeService;
 
 import io.swagger.annotations.ApiOperation;
@@ -23,7 +21,7 @@ import io.swagger.annotations.ApiParam;
  */
 
 @RestController
-@RequestMapping("/testTypes")
+@RequestMapping("api/test-types")
 public class TestTypeController {
 	
 	@Autowired
@@ -82,12 +80,14 @@ public class TestTypeController {
 		return testTypeService.getTestIdByTypeAndName(testType, testName);
 	}
 	
-	@GetMapping("/getAllTestType")
+	@GetMapping
 	@ApiOperation(value = "Gets All the distinct test type",
             notes = "Get all test type from dat.test_types table")
-	public List<String> getAllTestType() {
-		
-		return testTypeService.getAllTestType();
+	public ApiResponse<String> getAllTestType() {
+	    ApiResponse<String> response = new ApiResponse<>();
+        response.setDatas(testTypeService.getAllTestType());
+        response.setSucessCode(ResponseCode.FETCHED_SUCCESSFULLY.value());
+        return response;
 	}
 	
 

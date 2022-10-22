@@ -34,7 +34,7 @@ public class SiteServiceImpl implements ISiteService {
 
     @Override
     public List<SiteDTO> getAllSitesByTypeAndStatus(String type, String status) {
-        List<Site> siteList = siteRepository.findByTypeAndStatus(type, status);
+        List<Site> siteList = siteRepository.findByTypeAndStatusOrderByFirstNameAsc(type, status);
         List<SiteDTO> siteDtoList = new ArrayList<>();
         siteList.forEach(site -> {
             siteDtoList.add(siteMapper.toDTO(site));

@@ -129,6 +129,8 @@ public class SiteDTO {
     private String siteHrs;
     private Boolean excludeFromAutomatedFax;
     private AddressDTO address;
+    
+    private String name;
 
     /**
      * private String cityList;

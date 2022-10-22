@@ -1,5 +1,7 @@
 package com.wfqa.dat.mapper;
 
+import java.util.Objects;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,7 @@ public class SiteMapper implements HMapper<SiteDTO, Site> {
         SiteDTO siteDTO = new SiteDTO();
         BeanUtils.copyProperties(u, siteDTO);
         siteDTO.setAddress(addressMapper.toDTO(u.getAddress()));
+        siteDTO.setName(u.getFirstName() + (Objects.isNull(u.getLastName()) ? "" : u.getLastName()));
         return siteDTO;
     }
 

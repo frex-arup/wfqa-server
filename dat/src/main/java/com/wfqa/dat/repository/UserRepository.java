@@ -13,6 +13,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 	
 	List<User> findByStatus(String status);
 	
-	Optional<User> findByLoginUserIdAndStatus(String loginUserId, String status);
+	Optional<User> findByLoginUserIdIgnoreCaseAndStatus(String loginUserId, String status);
 
 }

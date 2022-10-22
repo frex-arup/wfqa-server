@@ -26,10 +26,10 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User getUsersByLoginUserId(String loginUserId, String status) {
-		User user = userRepository.findByLoginUserIdAndStatus("ranes", "A").get();
+		User user = userRepository.findByLoginUserIdIgnoreCaseAndStatus("ranes", "A").get();
 		user.setAllowPoctResultEntry(!user.isAllowPoctResultEntry());
 		userRepository.save(user);
-		return userRepository.findByLoginUserIdAndStatus(loginUserId, status).orElse(null);
+		return userRepository.findByLoginUserIdIgnoreCaseAndStatus(loginUserId, status).orElse(null);
 	}
 
 }

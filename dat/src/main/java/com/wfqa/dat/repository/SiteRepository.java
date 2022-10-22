@@ -12,5 +12,6 @@ import com.wfqa.dat.entity.Site;
 public interface SiteRepository extends JpaRepository<Site, Long> {
 
     Optional<Site> findByIdAndTypeAndStatus(Long id, String type, String status);
-    List<Site> findByTypeAndStatus(String type, String status);
+    
+    List<Site> findByTypeAndStatusOrderByFirstNameAsc(String type, String status);
 }

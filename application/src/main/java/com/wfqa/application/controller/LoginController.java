@@ -17,6 +17,8 @@ import com.wfqa.dat.repository.UserRepository;
 @RestController
 @RequestMapping(value = "/api/login")
 public class LoginController {
+    
+    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	
 	@Autowired
 	private UserDetailsServiceImpl userDetailsServiceImpl;
@@ -33,9 +35,10 @@ public class LoginController {
 		UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(userDTO.getLoginUserId());
 		ApiResponse<UserDTO> response = new ApiResponse<UserDTO>();
 		
-		User user = userRepository.findByLoginUserIdAndStatus(userDetails.getUsername(), "A").orElse(new User());
+		User user = userRepository.findByLoginUserIdIgnoreCaseAndStatus(userDetails.getUsername(), "A").orElse(new User());
+		UserDTO dto = userMapper.toDTO(user);
+		dto.setEncryKey(generatePassword(7));
 		try {
-			UserDTO dto = userMapper.toDTO(user);
 			response.setData(dto);
 			response.setSucessCode(1000);
 			return response;
@@ -45,5 +48,22 @@ public class LoginController {
 		}
 		
 	}
+	
+	/**
+     * <tt>generatePassword</tt> is a method used to generate random password
+     * 
+     * @param count
+     * @return
+     */
+    public static String generatePassword(int count) {
+        StringBuilder builder = new StringBuilder();
+        int c = count;
+        while (c-- != 0) {
+            double random = Math.random();
+            int character = (int) (random * ALPHA_NUMERIC_STRING.length());
+            builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+        }
+        return builder.toString();
+    }
 
 }

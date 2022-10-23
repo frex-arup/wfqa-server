@@ -1,10 +1,10 @@
-package com.wfqa.dat.dto;
+package com.wfqa.mroplace.dto;
 
 import java.io.Serializable;
 
+import com.wfqa.dat.dto.SiteDTO;
+
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class CustomerAssociationDTO implements Serializable {

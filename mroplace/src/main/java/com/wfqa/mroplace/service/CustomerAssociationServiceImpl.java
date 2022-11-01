@@ -1,11 +1,14 @@
 package com.wfqa.mroplace.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wfqa.dat.dto.SiteDTO;
+import com.wfqa.dat.entity.Site;
 import com.wfqa.mroplace.dto.CustomerAssociationDTO;
 import com.wfqa.mroplace.dto.LANSubAccountDTO;
 import com.wfqa.mroplace.entity.CustomerAssociation;
@@ -39,7 +42,12 @@ public class CustomerAssociationServiceImpl implements ICustomerAssociationServi
     @Override
     public List<LANSubAccountDTO> getSubAccountList(long customerId, String testType, Long labId, Long mroId,
             String cityName, String csName, String sortBy) {
-        return customerAssociationRepository.getSubAccountList(customerId, testType, labId, mroId, cityName, csName, sortBy, "A");
+    	List<LANSubAccountDTO> subAccountDTOList1 = customerAssociationRepository.getSubAccountList(customerId, testType, labId, mroId, cityName, csName, sortBy, "A");
+    	List<LANSubAccountDTO> subAccountDTOList2 = customerAssociationRepository.getSubAccountList(customerId, testType, labId, mroId, sortBy, "A");
+    	List<LANSubAccountDTO> subAccountDTOList = new ArrayList<>();
+    	subAccountDTOList.addAll(subAccountDTOList2);
+    	subAccountDTOList.addAll(subAccountDTOList1);
+        return subAccountDTOList;
     }
 
 }
